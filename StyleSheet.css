@@ -1,0 +1,116 @@
+﻿.container {
+    width: 70%;
+    height: 1000px;
+    margin: 0 auto;
+    background-color: #ebeced;
+}
+
+.header {
+    width: 100%;
+    height: 180px;
+    margin: 0 auto;
+    background-color: #37454d;
+}
+
+.search-bar {
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+    background-color: #ebeced;
+}
+
+    .search-bar input[type="text"] {
+        width: 70%;
+        height: 40px;
+        padding-left: 20px;
+    }
+
+    .search-bar button[type="submit"] {
+        background-color: #007fad;
+        width: 20%;
+        height: 50px;
+    }
+
+.main {
+    width: 100%;
+    height: 850px;
+    margin: 0 auto;
+    background-color: #ebeced;
+}
+
+.filtering {
+    width: 100%;
+    margin: 0 auto;
+    height: 120px;
+}
+
+.left-filtering {
+    float: left;
+    display: inline-block;
+    width: 32%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.middle-filtering {
+    float: left;
+    display: inline-block;
+    width: 32%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.right-filtering {
+    float: left;
+    display: inline-block;
+    width: 32%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.checkin-date-selection {
+    color: #ebeced;
+}
+
+.checkout-date-selection {
+    color: #ebeced;
+}
+
+.price-selection {
+    color: #ebeced;
+}
+
+.googleMap {
+    display: inline-block;
+    float: left;
+}
+.hotelSorting {
+    display: inline-block;
+    float: right;
+    vertical-align: top;
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    height: 180px;
+    background-size: cover;
+}
+
+.hotel-box {
+    background-color: white;
+}
+
+.hotel-list {
+    clear: left;
+}
+ 
+li {
+    list-style: none;
+}

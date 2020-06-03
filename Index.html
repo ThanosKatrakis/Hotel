@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Assignment 5 - Thanos Katrakis</title>
+    <link href="StyleSheet.css" rel="stylesheet" />
+    <script src="Scripts/angular.js"></script>
+
+    <script>
+
+        var app = angular.module('MyApp', []);
+
+        app.controller("MyAppController", function ($scope, $http) {
+
+            var url = "data.json";
+
+            FetchData();
+
+            function FetchData() {
+                $http.get(url)
+                    .then(function (response) {
+                        $scope.Hotels = response.data[1].entries;
+                        var prices = [];
+                        for (var i in $scope.Hotels) {
+                            prices.push($scope.Hotels[i].price);
+                        }
+                        $scope.max = Math.max(...prices);
+                        $scope.rangemax = $scope.max;
+                    }, function myError(response) {
+                        console.log(response);
+                    });
+            }
+
+            $scope.filterPrice = function (obj) {
+                return obj.price > 0 && obj.price <= $scope.max;
+            };
+
+        });
+
+    </script>
+
+</head>
+
+<body ng-app="MyApp" ng-controller="MyAppController">
+
+    <div class="container">
+        <!--HEADER SECTION-->
+        <div class="header">
+            <div class="search-bar">
+                <input type="text" ng-model="search.hotelName" placeholder="Search Hotel Name" />
+                <button ng-click="GetData(search.hotelName)" type="submit">Search</button>
+            </div>
+
+            <div class="filtering">
+
+                <div class="left-filtering">
+                    <div class="checkin-date-selection">
+                        <label for="start">Check-In Date:</label>
+                        <input type="date" class="check-in" id="start" value="2020-01-01" />
+                    </div>
+                    <div class="price-selection">
+                        <b>{{max | currency}}</b>
+                        <input type="range" ng-model="max" placeholder="hotel name" min="0" max="1800" />
+
+                    </div>
+                </div>
+
+                <div class="middle-filtering">
+                    <div class="checkout-date-selection">
+                        <label for="end">Check-Out Date:</label>
+                        <input type="date" class="check-out" id="start" value="2022-01-01" />
+                    </div>
+                    <div class="type-rating-field">
+                        <div class="property-type">
+                            <select>
+                                <option value="none" disabled selected>Property Type</option>
+                                <option value="type-a">0</option>
+                                <option value="type-b">1</option>
+                                <option value="type-c">2</option>
+                                <option value="type-d">3</option>
+                                <option value="type-d">4</option>
+                                <option value="type-d">5</option>
+                            </select>
+                        </div>
+                        <div class="guest-rating">
+                            <select>
+                                <option value="none" disabled selected>Guest Rating</option>
+                                <option value="zero-star"> 0 – 2 Okay</option>
+                                <option value="one-star"> 2 – 6 Fair</option>
+                                <option value="two-star">6 – 7 Good</option>
+                                <option value="three-star"> 7 – 8.5 Very Good</option>
+                                <option value="four-star">8.5 – 10 Excellent </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-filtering">
+                    <div class="room-capacity">
+                        <select>
+                            <option value="none" disabled selected>Choose Room</option>
+                            <option value="single">Single Room</option>
+                            <option value="double">Double Room</option>
+                            <option value="family">Family Room</option>
+                        </select>
+                    </div>
+                    <div class="hotel-location">
+                        <select ng-model="search.city">
+                            <option value="none" selected>Hotels Location</option>
+                            <option>Paris</option>
+                            <option>Toulouz</option>
+                            <option>Marseille</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!--MAIN SECTION-->
+            <div class="main">
+                <div class="map-sorting">
+                    <div class="googleMap">
+                        <iframe width="250" height="80"
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d83998.94722687619!2d2.277019841665155!3d48.8588377391234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sgr!4v1554987763683!5m2!1sen!2sgr">
+                        </iframe>
+                    </div>
+                    <div class="hotelSorting">
+                        Sort By:
+                    </div>
+                </div>
+
+                <div class="hotel-list">
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                            <tr class="hotel-box" ng-repeat="hotel in Hotels | filter:filterPrice | filter:search:strict | orderBy:'+guestrating'">
+                                <td width="15%"><img style="max-width:100%" src={{hotel.thumbnail}} alt="Onoma Ksenodoxiou" /></td>
+                                <td width="10%">
+                                    <ul>
+                                        <li>Hotel Name: {{hotel.hotelName}}</li>
+                                        <li>Hotel Rating: {{hotel.rating}}</li>
+                                        <li>Guest Rating: {{hotel.guestrating}}</li>
+                                    </ul>
+                                </td>
+                                <td width="30%">{{hotel.city}}</td>
+                                <td width="5%">{{hotel.ratings.no}}</td>
+                                <td width="10%">{{hotel.ratings.text}}</td>
+                                <td width="5%">{{hotel.price}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
